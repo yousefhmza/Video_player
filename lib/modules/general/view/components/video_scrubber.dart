@@ -54,7 +54,7 @@ class _VideoScrubberState extends State<VideoScrubber> {
                 overlayShape: SliderComponentShape.noOverlay,
               ),
               child: Slider(
-                value: _value,
+                value: _value.isNaN ? 0 : _value,
                 inactiveColor: Colors.grey,
                 min: 0.0,
                 max: 1.0,
