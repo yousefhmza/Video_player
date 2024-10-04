@@ -1,6 +1,7 @@
 import 'package:better_player/better_player.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:video_player/core/extensions/non_null_extensions.dart';
 import 'package:video_player/core/extensions/num_extensions.dart';
 import 'package:video_player/core/resources/resources.dart';
 import 'package:video_player/core/view/views.dart';
@@ -28,7 +29,7 @@ class _SpeedAndQualityControlsState extends State<SpeedAndQualityControls> {
     widget.videoController.addEventsListener((event) {
       if (event.betterPlayerEventType == BetterPlayerEventType.initialized) {
         availableTrackQualities =
-            widget.videoController.betterPlayerAsmsTracks.where((track) => track.height != null).toList();
+            widget.videoController.betterPlayerAsmsTracks.where((track) => track.height.orZero != 0).toList();
         selectedTrackQuality = widget.videoController.betterPlayerAsmsTrack;
       }
     });

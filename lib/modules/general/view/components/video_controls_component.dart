@@ -73,13 +73,7 @@ class _VideoControlsComponentState extends State<VideoControlsComponent> {
                     child: Column(
                       children: [
                         SpeedAndQualityControls(videoController: widget.videoController),
-                        ValueListenableBuilder(
-                          valueListenable: widget.videoController.videoPlayerController!,
-                          builder: (context, value, child) => VideoScrubber(
-                            videoController: widget.videoController,
-                            playerValue: value,
-                          ),
-                        )
+                        VideoScrubber(videoController: widget.videoController),
                       ],
                     ),
                   ),

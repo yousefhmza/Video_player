@@ -10,9 +10,9 @@ class Responsive {
 
   DeviceDimensionsType? deviceDimensionsType;
 
-  double deviceWidth(BuildContext context) => MediaQuery.of(context).size.width;
+  double deviceWidth(BuildContext context) => MediaQuery.sizeOf(context).width;
 
-  double deviceHeight(BuildContext context) => MediaQuery.of(context).size.height;
+  double deviceHeight(BuildContext context) => MediaQuery.sizeOf(context).height;
   final int miniPhoneMinWidth = 320;
   final int miniPhoneMaxWidth = 360;
   final int phoneMinWidth = 360;
