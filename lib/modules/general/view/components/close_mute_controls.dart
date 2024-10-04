@@ -22,7 +22,23 @@ class CloseMuteControls extends StatelessWidget {
               onTap: isVisible ? () => NavigationService.goBack() : null,
               child: CustomIcon.svg(AppIcons.close),
             ),
-            CustomIcon.svg(AppIcons.volume, size: AppSize.s20),
+            StatefulBuilder(
+              builder: (context, setState) => GestureDetector(
+                onTap: isVisible
+                    ? () {
+                        setState(() {
+                          videoController.videoPlayerController!.value.volume == 0
+                              ? videoController.setVolume(1)
+                              : videoController.setVolume(0);
+                        });
+                      }
+                    : null,
+                child: CustomIcon.svg(
+                  videoController.videoPlayerController!.value.volume == 0 ? AppIcons.volumeMuted : AppIcons.volume,
+                  size: AppSize.s20,
+                ),
+              ),
+            ),
           ],
         ),
       ),

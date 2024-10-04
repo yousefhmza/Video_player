@@ -10,6 +10,7 @@ class AppIcons {
   static const String previous = "$_iconsPath/previous.svg";
   static const String speed = "$_iconsPath/speed.svg";
   static const String volume = "$_iconsPath/volume.svg";
+  static const String volumeMuted = "$_iconsPath/volume_muted.svg";
 }
 
 class AppImages {
