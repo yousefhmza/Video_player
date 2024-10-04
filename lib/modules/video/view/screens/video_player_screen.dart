@@ -1,7 +1,7 @@
 import 'package:better_player/better_player.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:video_player/modules/general/view/components/video_controls_component.dart';
+import 'package:video_player/modules/video/view/components/video_controls_component.dart';
 
 import '../../../../core/resources/resources.dart';
 import '../../../../core/view/views.dart';
@@ -23,12 +23,14 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
       BetterPlayerDataSourceType.network,
       widget.videoUrl,
       useAsmsSubtitles: true,
+      useAsmsTracks: true,
       asmsTrackNames: ["240p", "360p", "480p", "720p", "1080p"],
     );
     _videoController = BetterPlayerController(
       BetterPlayerConfiguration(
         aspectRatio: 16 / 9,
         autoPlay: true,
+        allowedScreenSleep: false,
         controlsConfiguration: BetterPlayerControlsConfiguration(
           playerTheme: BetterPlayerTheme.custom,
           enablePlaybackSpeed: true,

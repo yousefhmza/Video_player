@@ -3,9 +3,9 @@ import 'dart:async';
 import 'package:better_player/better_player.dart';
 import 'package:flutter/material.dart';
 import 'package:video_player/core/services/responsive/responsive_service.dart';
-import 'package:video_player/modules/general/view/components/close_mute_controls.dart';
-import 'package:video_player/modules/general/view/components/play_pause_seek_controls.dart';
-import 'package:video_player/modules/general/view/components/speed_and_quality_controls.dart';
+import 'package:video_player/modules/video/view/components/close_mute_controls.dart';
+import 'package:video_player/modules/video/view/components/play_pause_seek_controls.dart';
+import 'package:video_player/modules/video/view/components/speed_and_quality_controls.dart';
 
 import '../../../../core/resources/resources.dart';
 import 'video_scrubber.dart';

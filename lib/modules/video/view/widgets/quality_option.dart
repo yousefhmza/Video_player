@@ -27,7 +27,7 @@ class QualityOption extends PopupMenuItem {
             }
           },
           child: CustomText(
-            "${quality.height}p",
+            quality.height == 0 ? AppStrings.auto: "${quality.height}p",
             fontWeight: quality.bitrate == selectedQuality?.bitrate ? FontWeightManager.bold : FontWeightManager.medium,
             color: quality.bitrate == selectedQuality?.bitrate ? AppColors.primary : AppColors.white,
           ),

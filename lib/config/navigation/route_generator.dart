@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../modules/general/view/screens/video_player_screen.dart';
+import '../../modules/video/view/screens/video_player_screen.dart';
 import '../../modules/home/views/screens/home_screen.dart';
 import 'navigation.dart';
 

@@ -5,9 +5,9 @@ import 'package:video_player/core/extensions/non_null_extensions.dart';
 import 'package:video_player/core/extensions/num_extensions.dart';
 import 'package:video_player/core/resources/resources.dart';
 import 'package:video_player/core/view/views.dart';
-import 'package:video_player/modules/general/view/widgets/menu_options_header.dart';
-import 'package:video_player/modules/general/view/widgets/quality_option.dart';
-import 'package:video_player/modules/general/view/widgets/speed_option.dart';
+import 'package:video_player/modules/video/view/widgets/menu_options_header.dart';
+import 'package:video_player/modules/video/view/widgets/quality_option.dart';
+import 'package:video_player/modules/video/view/widgets/speed_option.dart';
 
 class SpeedAndQualityControls extends StatefulWidget {
   final BetterPlayerController videoController;
@@ -29,8 +29,8 @@ class _SpeedAndQualityControlsState extends State<SpeedAndQualityControls> {
     widget.videoController.addEventsListener((event) {
       if (event.betterPlayerEventType == BetterPlayerEventType.initialized) {
         availableTrackQualities =
-            widget.videoController.betterPlayerAsmsTracks.where((track) => track.height.orZero != 0).toList();
-        selectedTrackQuality = widget.videoController.betterPlayerAsmsTrack;
+            widget.videoController.betterPlayerAsmsTracks.where((track) => track.height != null).toList();
+        selectedTrackQuality = availableTrackQualities.first;
       }
     });
   }
