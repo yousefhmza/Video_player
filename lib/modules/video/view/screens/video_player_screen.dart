@@ -24,10 +24,17 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
       widget.videoUrl,
       useAsmsSubtitles: true,
       useAsmsTracks: true,
+      bufferingConfiguration: const BetterPlayerBufferingConfiguration(maxBufferMs: 7 * 60 * 1000),
+      cacheConfiguration: const BetterPlayerCacheConfiguration(
+        useCache: true,
+        preCacheSize: 100 * 1024 * 1024, //100 MB
+        maxCacheSize: 100 * 1024 * 1024, //100 MB
+        maxCacheFileSize: 100 * 1024 * 1024, //100 MB
+      ),
       asmsTrackNames: ["240p", "360p", "480p", "720p", "1080p"],
     );
     _videoController = BetterPlayerController(
-      BetterPlayerConfiguration(
+      const BetterPlayerConfiguration(
         aspectRatio: 16 / 9,
         autoPlay: true,
         allowedScreenSleep: false,
@@ -63,9 +70,11 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
         body: Stack(
           children: [
             Center(
-              child: AspectRatio(
-                aspectRatio: 16 / 9,
-                child: BetterPlayer(controller: _videoController),
+              child: ValueListenableBuilder(
+                valueListenable: _videoController.videoPlayerController!,
+                builder: (context, value, child) => value.initialized
+                    ? AspectRatio(aspectRatio: 16 / 9, child: BetterPlayer(controller: _videoController))
+                    : const LoadingSpinner(color: AppColors.white),
               ),
             ),
             VideoControlsComponent(videoController: _videoController),

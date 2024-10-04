@@ -24,7 +24,7 @@ class _VideoControlsComponentState extends State<VideoControlsComponent> {
   Timer? timer;
 
   void onScreenTapped() {
-    if (mounted) {
+    if (mounted && widget.videoController.videoPlayerController!.value.initialized) {
       showControls = !showControls;
       widget.videoController.setControlsVisibility(showControls);
       showControls ? timer = Timer(Time.t10s, onScreenTapped) : timer?.cancel();
