@@ -4,7 +4,7 @@ import 'package:better_player/better_player.dart';
 import 'package:flutter/material.dart';
 import 'package:video_player/core/services/responsive/responsive_service.dart';
 import 'package:video_player/modules/video/view/components/close_mute_controls.dart';
-import 'package:video_player/modules/video/view/components/play_pause_seek_controls.dart';
+import 'package:video_player/modules/video/view/components/play_pause_rewind_controls.dart';
 import 'package:video_player/modules/video/view/components/speed_and_quality_controls.dart';
 
 import '../../../../core/resources/resources.dart';
@@ -56,7 +56,7 @@ class _VideoControlsComponentState extends State<VideoControlsComponent> {
                 AnimatedOpacity(
                   opacity: isVisible ? 1 : 0,
                   duration: Time.t300ms,
-                  child: PlayPauseSeekControls(isVisible: isVisible, videoController: widget.videoController),
+                  child: PlayPauseRewindControls(isVisible: isVisible, videoController: widget.videoController),
                 ),
                 AnimatedOpacity(
                   opacity: isVisible ? 1 : 0,
@@ -72,8 +72,8 @@ class _VideoControlsComponentState extends State<VideoControlsComponent> {
                     duration: Time.t300ms,
                     child: Column(
                       children: [
-                        SpeedAndQualityControls(videoController: widget.videoController),
-                        VideoScrubber(videoController: widget.videoController),
+                        SpeedAndQualityControls(isVisible: isVisible, videoController: widget.videoController),
+                        VideoScrubber(isVisible: isVisible, videoController: widget.videoController),
                       ],
                     ),
                   ),

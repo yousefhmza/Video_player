@@ -1,7 +1,6 @@
 import 'package:better_player/better_player.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:video_player/core/extensions/non_null_extensions.dart';
 import 'package:video_player/core/extensions/num_extensions.dart';
 import 'package:video_player/core/resources/resources.dart';
 import 'package:video_player/core/view/views.dart';
@@ -10,9 +9,10 @@ import 'package:video_player/modules/video/view/widgets/quality_option.dart';
 import 'package:video_player/modules/video/view/widgets/speed_option.dart';
 
 class SpeedAndQualityControls extends StatefulWidget {
+  final bool isVisible;
   final BetterPlayerController videoController;
 
-  const SpeedAndQualityControls({required this.videoController, super.key});
+  const SpeedAndQualityControls({required this.isVisible, required this.videoController, super.key});
 
   @override
   State<SpeedAndQualityControls> createState() => _SpeedAndQualityControlsState();
@@ -43,6 +43,7 @@ class _SpeedAndQualityControlsState extends State<SpeedAndQualityControls> {
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           PopupMenuButton(
+            enabled: widget.isVisible,
             color: AppColors.dracula,
             elevation: AppSize.s0,
             constraints: BoxConstraints(maxWidth: AppSize.s160.w),
@@ -65,6 +66,7 @@ class _SpeedAndQualityControlsState extends State<SpeedAndQualityControls> {
           ),
           const HorizontalSpace(AppSize.s30),
           PopupMenuButton(
+            enabled: widget.isVisible,
             color: AppColors.dracula,
             elevation: AppSize.s0,
             constraints: BoxConstraints(maxWidth: AppSize.s160.w),
@@ -85,16 +87,18 @@ class _SpeedAndQualityControlsState extends State<SpeedAndQualityControls> {
           ),
           const HorizontalSpace(AppSize.s30),
           InkWell(
-            onTap: () {
-              isLandscape = !isLandscape;
-              if (isLandscape) {
-                SystemChrome.setPreferredOrientations(
-                  [DeviceOrientation.landscapeLeft, DeviceOrientation.landscapeRight],
-                );
-              } else {
-                SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-              }
-            },
+            onTap: widget.isVisible
+                ? () {
+                    isLandscape = !isLandscape;
+                    if (isLandscape) {
+                      SystemChrome.setPreferredOrientations(
+                        [DeviceOrientation.landscapeLeft, DeviceOrientation.landscapeRight],
+                      );
+                    } else {
+                      SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+                    }
+                  }
+                : null,
             child: CustomIcon.svg(AppIcons.fullscreen, size: AppSize.s16),
           ),
         ],

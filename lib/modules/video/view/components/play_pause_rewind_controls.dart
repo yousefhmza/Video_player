@@ -4,11 +4,11 @@ import 'package:flutter/material.dart';
 import '../../../../core/resources/resources.dart';
 import '../../../../core/view/views.dart';
 
-class PlayPauseSeekControls extends StatelessWidget {
+class PlayPauseRewindControls extends StatelessWidget {
   final bool isVisible;
   final BetterPlayerController videoController;
 
-  const PlayPauseSeekControls({required this.isVisible, required this.videoController, super.key});
+  const PlayPauseRewindControls({required this.isVisible, required this.videoController, super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -8,9 +8,10 @@ import '../../../../core/utils/utils.dart';
 import '../../../../core/view/views.dart';
 
 class VideoScrubber extends StatefulWidget {
+  final bool isVisible;
   final BetterPlayerController videoController;
 
-  const VideoScrubber({required this.videoController, super.key});
+  const VideoScrubber({required this.isVisible, required this.videoController, super.key});
 
   @override
   State<VideoScrubber> createState() => _VideoScrubberState();
@@ -106,6 +107,7 @@ class _VideoScrubberState extends State<VideoScrubber> {
                       min: 0.0,
                       max: 1.0,
                       onChanged: (newValue) {
+                        if (!widget.isVisible) return;
                         _currentPosition.value = newValue;
                         final newProgress = Duration(
                           milliseconds: (_currentPosition.value *
