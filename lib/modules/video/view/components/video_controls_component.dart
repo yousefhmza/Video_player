@@ -2,10 +2,13 @@ import 'dart:async';
 
 import 'package:better_player/better_player.dart';
 import 'package:flutter/material.dart';
-import 'package:video_player/core/services/responsive/responsive_service.dart';
+import 'package:video_player/core/extensions/num_extensions.dart';
+import 'package:video_player/modules/video/view/components/black_overlay.dart';
 import 'package:video_player/modules/video/view/components/close_mute_controls.dart';
 import 'package:video_player/modules/video/view/components/play_pause_rewind_controls.dart';
+import 'package:video_player/modules/video/view/components/playback_speed_slider.dart';
 import 'package:video_player/modules/video/view/components/speed_and_quality_controls.dart';
+import 'package:video_player/modules/video/view/components/volume_slider.dart';
 
 import '../../../../core/resources/resources.dart';
 import 'video_scrubber.dart';
@@ -22,6 +25,7 @@ class VideoControlsComponent extends StatefulWidget {
 class _VideoControlsComponentState extends State<VideoControlsComponent> {
   bool showControls = false;
   Timer? timer;
+  ValueNotifier<String> toggleSpeedAndVolumeSliders = ValueNotifier("");
 
   void onScreenTapped() {
     if (mounted && widget.videoController.videoPlayerController!.value.initialized) {
@@ -43,15 +47,12 @@ class _VideoControlsComponentState extends State<VideoControlsComponent> {
           return Center(
             child: Stack(
               children: [
-                // Black overlay
-                AnimatedOpacity(
-                  opacity: isVisible ? 1 : 0,
-                  duration: Time.t300ms,
-                  child: Container(
-                    width: Responsive.instance.deviceWidth(context),
-                    height: Responsive.instance.deviceHeight(context),
-                    color: AppColors.black.withOpacity(0.4),
-                  ),
+                BlackOverlay(
+                  isVisible: isVisible,
+                  videoController: widget.videoController,
+                  hideControls: () {
+                    onScreenTapped();
+                  },
                 ),
                 AnimatedOpacity(
                   opacity: isVisible ? 1 : 0,
@@ -61,7 +62,11 @@ class _VideoControlsComponentState extends State<VideoControlsComponent> {
                 AnimatedOpacity(
                   opacity: isVisible ? 1 : 0,
                   duration: Time.t300ms,
-                  child: CloseMuteControls(isVisible: isVisible, videoController: widget.videoController),
+                  child: CloseMuteControls(
+                    isVisible: isVisible,
+                    videoController: widget.videoController,
+                    onLongPress: () => toggleSpeedAndVolumeSliders.value = "volume",
+                  ),
                 ),
                 PositionedDirectional(
                   start: AppSize.s0,
@@ -72,9 +77,36 @@ class _VideoControlsComponentState extends State<VideoControlsComponent> {
                     duration: Time.t300ms,
                     child: Column(
                       children: [
-                        SpeedAndQualityControls(isVisible: isVisible, videoController: widget.videoController),
+                        SpeedAndQualityControls(
+                          isVisible: isVisible,
+                          videoController: widget.videoController,
+                          onCustomSpeedPressed: () => toggleSpeedAndVolumeSliders.value = "speed",
+                        ),
                         VideoScrubber(isVisible: isVisible, videoController: widget.videoController),
                       ],
+                    ),
+                  ),
+                ),
+                Align(
+                  alignment: AlignmentDirectional.centerEnd,
+                  child: SizedBox(
+                    width: AppSize.s100.w,
+                    height: AppSize.s320.h,
+                    child: Center(
+                      child: ValueListenableBuilder<String>(
+                        valueListenable: toggleSpeedAndVolumeSliders,
+                        builder: (context, value, child) => value.isEmpty
+                            ? const SizedBox.shrink()
+                            : value == "speed"
+                                ? PlaybackSpeedSlider(
+                                    videoController: widget.videoController,
+                                    disposeSlider: () => toggleSpeedAndVolumeSliders.value = "",
+                                  )
+                                : VolumeSlider(
+                                    videoController: widget.videoController,
+                                    disposeSlider: () => toggleSpeedAndVolumeSliders.value = "",
+                                  ),
+                      ),
                     ),
                   ),
                 ),

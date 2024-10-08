@@ -11,8 +11,14 @@ import 'package:video_player/modules/video/view/widgets/speed_option.dart';
 class SpeedAndQualityControls extends StatefulWidget {
   final bool isVisible;
   final BetterPlayerController videoController;
+  final VoidCallback onCustomSpeedPressed;
 
-  const SpeedAndQualityControls({required this.isVisible, required this.videoController, super.key});
+  const SpeedAndQualityControls({
+    required this.isVisible,
+    required this.videoController,
+    required this.onCustomSpeedPressed,
+    super.key,
+  });
 
   @override
   State<SpeedAndQualityControls> createState() => _SpeedAndQualityControlsState();
@@ -21,7 +27,9 @@ class SpeedAndQualityControls extends StatefulWidget {
 class _SpeedAndQualityControlsState extends State<SpeedAndQualityControls> {
   bool isLandscape = false;
   List<BetterPlayerAsmsTrack> availableTrackQualities = [];
+  List<String> availableSpeeds = [AppStrings.custom, "2.0", "1.75", "1.5", "1.25", "1.0", "0.5", "0.25"];
   BetterPlayerAsmsTrack? selectedTrackQuality;
+  String selectedSpeed = "1.0";
 
   @override
   void initState() {
@@ -76,13 +84,18 @@ class _SpeedAndQualityControlsState extends State<SpeedAndQualityControls> {
             child: CustomIcon.svg(AppIcons.speed, size: AppSize.s18),
             itemBuilder: (context) => [
               MenuOptionsHeader(title: AppStrings.playbackSpeed),
-              SpeedOption(videoController: widget.videoController, speed: 2.0),
-              SpeedOption(videoController: widget.videoController, speed: 1.75),
-              SpeedOption(videoController: widget.videoController, speed: 1.5),
-              SpeedOption(videoController: widget.videoController, speed: 1.25),
-              SpeedOption(videoController: widget.videoController, speed: 1.0),
-              SpeedOption(videoController: widget.videoController, speed: 0.5),
-              SpeedOption(videoController: widget.videoController, speed: 0.25),
+              ...List.generate(
+                availableSpeeds.length,
+                (index) => SpeedOption(
+                  videoController: widget.videoController,
+                  speed: availableSpeeds[index],
+                  selectedSpeed: selectedSpeed,
+                  onSelectSpeed: () {
+                    if (index == 0) widget.onCustomSpeedPressed();
+                    selectedSpeed = availableSpeeds[index];
+                  },
+                ),
+              ),
             ],
           ),
           const HorizontalSpace(AppSize.s30),

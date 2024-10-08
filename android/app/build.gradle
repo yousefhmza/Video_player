@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.video_player"
+    namespace = "com.mirmaz.video"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
 
@@ -19,7 +19,7 @@ android {
     }
 
     defaultConfig {
-        applicationId = "com.example.video_player"
+        applicationId = "com.mirmaz.video"
         minSdk = flutter.minSdkVersion
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
