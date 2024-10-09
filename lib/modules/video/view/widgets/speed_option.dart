@@ -8,19 +8,13 @@ import '../../../../core/view/views.dart';
 class SpeedOption extends PopupMenuItem {
   final BetterPlayerController videoController;
   final String speed;
-  final String selectedSpeed;
-  final void Function() onSelectSpeed;
+  final void Function()? onSelectSpeed;
 
-  SpeedOption({
-    super.key,
-    required this.videoController,
-    required this.speed,
-    required this.selectedSpeed,
-    required this.onSelectSpeed,
-  }) : super(
+  SpeedOption({super.key, required this.videoController, required this.speed, this.onSelectSpeed})
+      : super(
           onTap: () async {
             final double? parsedSpeed = double.tryParse(speed);
-            onSelectSpeed();
+            if (onSelectSpeed != null) onSelectSpeed();
             if (parsedSpeed == null) return;
 
             // Set playback speed if parsed
@@ -32,8 +26,12 @@ class SpeedOption extends PopupMenuItem {
           },
           child: CustomText(
             "$speed X",
-            fontWeight: speed == selectedSpeed ? FontWeightManager.bold : FontWeightManager.medium,
-            color: speed == selectedSpeed ? AppColors.primary : AppColors.white,
+            fontWeight: videoController.videoPlayerController?.value.speed.toString() == speed
+                ? FontWeightManager.bold
+                : FontWeightManager.medium,
+            color: videoController.videoPlayerController?.value.speed.toString() == speed
+                ? AppColors.primary
+                : AppColors.white,
           ),
         );
 }

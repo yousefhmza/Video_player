@@ -49,62 +49,54 @@ class _PlaybackSpeedSliderState extends State<PlaybackSpeedSlider> with SingleTi
     return SlideTransition(
       position: animation,
       child: SizedBox(
-        width: AppSize.s64.w,
-        height: AppSize.s160.h,
-        child: RotatedBox(
-          quarterTurns: -1,
-          child: SliderTheme(
-            data: SliderThemeData(
-              trackHeight: AppSize.s64.w,
-              thumbShape: SliderComponentShape.noThumb,
-              overlayShape: SliderComponentShape.noThumb,
-              valueIndicatorShape: SliderComponentShape.noThumb,
-              activeTrackColor: AppColors.white,
-              inactiveTrackColor: AppColors.grey300,
-              trackShape: const RectangularSliderTrackShape(),
-            ),
-            child: Stack(
-              alignment: AlignmentDirectional.centerStart,
-              children: [
-                ClipRRect(
-                  borderRadius: AppBorderRadius.all(AppSize.s16),
-                  child: Slider(
-                    value: currentSpeed,
-                    min: 0,
-                    max: 2,
-                    onChanged: (value) {
-                      setState(() {
-                        currentSpeed = value;
-                        widget.videoController.setSpeed(currentSpeed);
-                      });
-                      setTimer();
-                    },
-                  ),
+        width: AppSize.s160.w,
+        height: AppSize.s56.h,
+        child: SliderTheme(
+          data: SliderThemeData(
+            trackHeight: AppSize.s64.w,
+            thumbShape: SliderComponentShape.noThumb,
+            overlayShape: SliderComponentShape.noThumb,
+            valueIndicatorShape: SliderComponentShape.noThumb,
+            activeTrackColor: AppColors.white,
+            inactiveTrackColor: AppColors.grey300,
+            trackShape: const RectangularSliderTrackShape(),
+          ),
+          child: Stack(
+            alignment: AlignmentDirectional.centerStart,
+            children: [
+              ClipRRect(
+                borderRadius: AppBorderRadius.all(AppSize.s16),
+                child: Slider(
+                  value: currentSpeed,
+                  min: 0.1,
+                  max: 2,
+                  divisions: 19,
+                  onChanged: (value) {
+                    setState(() {
+                      currentSpeed = value;
+                      widget.videoController.setSpeed(currentSpeed);
+                    });
+                    setTimer();
+                  },
                 ),
-                Row(
-                  children: [
-                    RotatedBox(
-                      quarterTurns: 1,
-                      child: Padding(
-                        padding: AppEdgeInsets.all(AppPadding.p16),
-                        child: CustomIcon(Icons.timer_rounded, color: AppColors.black),
-                      ),
-                    ),
-                    const Spacer(),
-                    RotatedBox(
-                      quarterTurns: 1,
-                      child: CustomText(
-                        "X${currentSpeed.toStringAsFixed(2)}",
-                        fontWeight: FontWeightManager.bold,
-                        autoSized: true,
-                        maxLines: 1,
-                      ),
-                    ),
-                    const HorizontalSpace(AppSize.s8),
-                  ],
-                )
-              ],
-            ),
+              ),
+              Row(
+                children: [
+                  Padding(
+                    padding: AppEdgeInsets.all(AppPadding.p16),
+                    child: CustomIcon(Icons.timer_rounded, color: AppColors.black),
+                  ),
+                  const Spacer(),
+                  CustomText(
+                    "X${currentSpeed.toStringAsFixed(1)}",
+                    fontWeight: FontWeightManager.bold,
+                    autoSized: true,
+                    maxLines: 1,
+                  ),
+                  const HorizontalSpace(AppSize.s8),
+                ],
+              )
+            ],
           ),
         ),
       ),

@@ -27,9 +27,29 @@ class SpeedAndQualityControls extends StatefulWidget {
 class _SpeedAndQualityControlsState extends State<SpeedAndQualityControls> {
   bool isLandscape = false;
   List<BetterPlayerAsmsTrack> availableTrackQualities = [];
-  List<String> availableSpeeds = [AppStrings.custom, "2.0", "1.75", "1.5", "1.25", "1.0", "0.5", "0.25"];
+  final List<double> availableSpeeds = [
+    2.0,
+    1.9,
+    1.8,
+    1.7,
+    1.6,
+    1.5,
+    1.4,
+    1.3,
+    1.2,
+    1.1,
+    1.0,
+    0.9,
+    0.8,
+    0.7,
+    0.6,
+    0.5,
+    0.4,
+    0.3,
+    0.2,
+    0.1,
+  ];
   BetterPlayerAsmsTrack? selectedTrackQuality;
-  String selectedSpeed = "1.0";
 
   @override
   void initState() {
@@ -84,16 +104,16 @@ class _SpeedAndQualityControlsState extends State<SpeedAndQualityControls> {
             child: CustomIcon.svg(AppIcons.speed, size: AppSize.s18),
             itemBuilder: (context) => [
               MenuOptionsHeader(title: AppStrings.playbackSpeed),
+              SpeedOption(
+                videoController: widget.videoController,
+                speed: AppStrings.custom,
+                onSelectSpeed: widget.onCustomSpeedPressed,
+              ),
               ...List.generate(
                 availableSpeeds.length,
                 (index) => SpeedOption(
                   videoController: widget.videoController,
-                  speed: availableSpeeds[index],
-                  selectedSpeed: selectedSpeed,
-                  onSelectSpeed: () {
-                    if (index == 0) widget.onCustomSpeedPressed();
-                    selectedSpeed = availableSpeeds[index];
-                  },
+                  speed: availableSpeeds[index].toString(),
                 ),
               ),
             ],

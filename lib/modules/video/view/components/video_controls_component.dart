@@ -88,24 +88,27 @@ class _VideoControlsComponentState extends State<VideoControlsComponent> {
                   ),
                 ),
                 Align(
-                  alignment: AlignmentDirectional.centerEnd,
-                  child: SizedBox(
-                    width: AppSize.s100.w,
-                    height: AppSize.s320.h,
-                    child: Center(
-                      child: ValueListenableBuilder<String>(
-                        valueListenable: toggleSpeedAndVolumeSliders,
-                        builder: (context, value, child) => value.isEmpty
-                            ? const SizedBox.shrink()
-                            : value == "speed"
-                                ? PlaybackSpeedSlider(
-                                    videoController: widget.videoController,
-                                    disposeSlider: () => toggleSpeedAndVolumeSliders.value = "",
-                                  )
-                                : VolumeSlider(
-                                    videoController: widget.videoController,
-                                    disposeSlider: () => toggleSpeedAndVolumeSliders.value = "",
-                                  ),
+                  alignment: AlignmentDirectional.topEnd,
+                  child: SafeArea(
+                    child: SizedBox(
+                      width: AppSize.s160.w + AppSize.s16.w,
+                      height: AppSize.s56.h,
+                      child: Align(
+                        alignment: AlignmentDirectional.centerStart,
+                        child: ValueListenableBuilder<String>(
+                          valueListenable: toggleSpeedAndVolumeSliders,
+                          builder: (context, value, child) => value.isEmpty
+                              ? const SizedBox.shrink()
+                              : value == "speed"
+                                  ? PlaybackSpeedSlider(
+                                      videoController: widget.videoController,
+                                      disposeSlider: () => toggleSpeedAndVolumeSliders.value = "",
+                                    )
+                                  : VolumeSlider(
+                                      videoController: widget.videoController,
+                                      disposeSlider: () => toggleSpeedAndVolumeSliders.value = "",
+                                    ),
+                        ),
                       ),
                     ),
                   ),
