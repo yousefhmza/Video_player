@@ -48,9 +48,10 @@ class _PlaybackSpeedSliderState extends State<PlaybackSpeedSlider> with SingleTi
   Widget build(BuildContext context) {
     return SlideTransition(
       position: animation,
-      child: SizedBox(
+      child: Container(
         width: AppSize.s160.w,
         height: AppSize.s56.h,
+        margin: AppEdgeInsets.symmetric(horizontal: AppPadding.p16, vertical: AppPadding.p8),
         child: SliderTheme(
           data: SliderThemeData(
             trackHeight: AppSize.s64.w,

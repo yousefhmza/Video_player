@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:better_player/better_player.dart';
 import 'package:flutter/material.dart';
-import 'package:video_player/core/extensions/num_extensions.dart';
 import 'package:video_player/modules/video/view/components/black_overlay.dart';
 import 'package:video_player/modules/video/view/components/close_mute_controls.dart';
 import 'package:video_player/modules/video/view/components/play_pause_rewind_controls.dart';
@@ -87,30 +86,26 @@ class _VideoControlsComponentState extends State<VideoControlsComponent> {
                     ),
                   ),
                 ),
-                Align(
-                  alignment: AlignmentDirectional.topEnd,
-                  child: SafeArea(
-                    child: SizedBox(
-                      width: AppSize.s160.w + AppSize.s16.w,
-                      height: AppSize.s56.h,
-                      child: Align(
-                        alignment: AlignmentDirectional.centerStart,
-                        child: ValueListenableBuilder<String>(
-                          valueListenable: toggleSpeedAndVolumeSliders,
-                          builder: (context, value, child) => value.isEmpty
-                              ? const SizedBox.shrink()
-                              : value == "speed"
-                                  ? PlaybackSpeedSlider(
-                                      videoController: widget.videoController,
-                                      disposeSlider: () => toggleSpeedAndVolumeSliders.value = "",
-                                    )
-                                  : VolumeSlider(
-                                      videoController: widget.videoController,
-                                      disposeSlider: () => toggleSpeedAndVolumeSliders.value = "",
-                                    ),
-                        ),
-                      ),
-                    ),
+                SafeArea(
+                  child: ValueListenableBuilder<String>(
+                    valueListenable: toggleSpeedAndVolumeSliders,
+                    builder: (context, value, child) => value.isEmpty
+                        ? const SizedBox.shrink()
+                        : value == "speed"
+                            ? Align(
+                                alignment: AlignmentDirectional.topEnd,
+                                child: PlaybackSpeedSlider(
+                                  videoController: widget.videoController,
+                                  disposeSlider: () => toggleSpeedAndVolumeSliders.value = "",
+                                ),
+                              )
+                            : Align(
+                                alignment: AlignmentDirectional.centerEnd,
+                                child: VolumeSlider(
+                                  videoController: widget.videoController,
+                                  disposeSlider: () => toggleSpeedAndVolumeSliders.value = "",
+                                ),
+                              ),
                   ),
                 ),
               ],

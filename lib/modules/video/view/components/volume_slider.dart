@@ -47,55 +47,64 @@ class _VolumeSliderState extends State<VolumeSlider> with SingleTickerProviderSt
   Widget build(BuildContext context) {
     return SlideTransition(
       position: animation,
-      child: SizedBox(
-        width: AppSize.s160.w,
-        height: AppSize.s56.h,
-        child: SliderTheme(
-          data: SliderThemeData(
-            trackHeight: AppSize.s60.w,
-            thumbShape: SliderComponentShape.noThumb,
-            overlayShape: SliderComponentShape.noThumb,
-            valueIndicatorShape: SliderComponentShape.noThumb,
-            activeTrackColor: AppColors.white,
-            inactiveTrackColor: AppColors.grey300,
-            trackShape: const RectangularSliderTrackShape(),
-          ),
-          child: Stack(
-            alignment: AlignmentDirectional.centerStart,
-            children: [
-              ClipRRect(
-                borderRadius: AppBorderRadius.all(AppSize.s16),
-                child: Slider(
-                  value: currentVolume,
-                  min: 0,
-                  max: 1,
-                  onChanged: (value) {
-
-                    setState(() {
-                      currentVolume = value;
-                      widget.videoController.setVolume(currentVolume);
-                    });
-                    setTimer();
-                  },
+      child: Container(
+        width: AppSize.s56.w,
+        height: AppSize.s160.h,
+        margin: AppEdgeInsets.symmetric(horizontal: AppPadding.p16),
+        child: RotatedBox(
+          quarterTurns: -1,
+          child: SliderTheme(
+            data: SliderThemeData(
+              trackHeight: AppSize.s60.w,
+              thumbShape: SliderComponentShape.noThumb,
+              overlayShape: SliderComponentShape.noThumb,
+              valueIndicatorShape: SliderComponentShape.noThumb,
+              activeTrackColor: AppColors.white,
+              inactiveTrackColor: AppColors.grey300,
+              trackShape: const RectangularSliderTrackShape(),
+            ),
+            child: Stack(
+              alignment: AlignmentDirectional.centerStart,
+              children: [
+                ClipRRect(
+                  borderRadius: AppBorderRadius.all(AppSize.s16),
+                  child: Slider(
+                    value: currentVolume,
+                    min: 0,
+                    max: 1,
+                    onChanged: (value) {
+                      setState(() {
+                        currentVolume = value;
+                        widget.videoController.setVolume(currentVolume);
+                      });
+                      setTimer();
+                    },
+                  ),
                 ),
-              ),
-              Row(
-                children: [
-                  Padding(
-                    padding: AppEdgeInsets.all(AppPadding.p16),
-                    child: CustomIcon.svg(AppIcons.volume, color: AppColors.black, size: AppSize.s18),
-                  ),
-                  const Spacer(),
-                  CustomText(
-                    (currentVolume * 100).toStringAsFixed(0),
-                    fontWeight: FontWeightManager.bold,
-                    autoSized: true,
-                    maxLines: 1,
-                  ),
-                  const HorizontalSpace(AppSize.s8),
-                ],
-              ),
-            ],
+                Row(
+                  children: [
+                    RotatedBox(
+                      quarterTurns: 1,
+                      child: Padding(
+                        padding: AppEdgeInsets.all(AppPadding.p16),
+                        child: CustomIcon.svg(AppIcons.volume, color: AppColors.black, size: AppSize.s18),
+                      ),
+                    ),
+                    const Spacer(),
+                    RotatedBox(
+                      quarterTurns: 1,
+                      child: CustomText(
+                        (currentVolume * 100).toStringAsFixed(0),
+                        fontWeight: FontWeightManager.bold,
+                        autoSized: true,
+                        maxLines: 1,
+                      ),
+                    ),
+                    const HorizontalSpace(AppSize.s8),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),
