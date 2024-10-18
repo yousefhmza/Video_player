@@ -20,7 +20,7 @@ dependencies:
   fluttertoast: ^8.2.8
 
   # Utils
-  better_player: ^0.0.84
+  better_player_plus: ^1.0.7
 
 dev_dependencies:
   flutter_test:

@@ -1,4 +1,4 @@
-import 'package:better_player/better_player.dart';
+import 'package:better_player_plus/better_player_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:video_player/config/navigation/navigation.dart';
 import 'package:video_player/core/resources/resources.dart';
@@ -7,12 +7,12 @@ import 'package:video_player/core/view/views.dart';
 class CloseMuteControls extends StatelessWidget {
   final bool isVisible;
   final BetterPlayerController videoController;
-  final VoidCallback onLongPress;
+  final VoidCallback onPress;
 
   const CloseMuteControls({
     required this.isVisible,
     required this.videoController,
-    required this.onLongPress,
+    required this.onPress,
     super.key,
   });
 
@@ -29,12 +29,12 @@ class CloseMuteControls extends StatelessWidget {
               child: CustomIcon.svg(AppIcons.close),
             ),
             GestureDetector(
-              onTap: isVisible
+              onTap: onPress,
+              onLongPress: isVisible
                   ? () => videoController.videoPlayerController!.value.volume == 0
                       ? videoController.setVolume(1)
                       : videoController.setVolume(0)
                   : null,
-              onLongPress: onLongPress,
               child: ValueListenableBuilder(
                 valueListenable: videoController.videoPlayerController!,
                 builder: (context, value, child) => CustomIcon.svg(

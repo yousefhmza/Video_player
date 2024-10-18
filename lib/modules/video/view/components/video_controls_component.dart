@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:better_player/better_player.dart';
+import 'package:better_player_plus/better_player_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:video_player/modules/video/view/components/black_overlay.dart';
 import 'package:video_player/modules/video/view/components/close_mute_controls.dart';
@@ -64,7 +64,7 @@ class _VideoControlsComponentState extends State<VideoControlsComponent> {
                   child: CloseMuteControls(
                     isVisible: isVisible,
                     videoController: widget.videoController,
-                    onLongPress: () => toggleSpeedAndVolumeSliders.value = "volume",
+                    onPress: () => toggleSpeedAndVolumeSliders.value = "volume",
                   ),
                 ),
                 PositionedDirectional(
@@ -93,7 +93,7 @@ class _VideoControlsComponentState extends State<VideoControlsComponent> {
                         ? const SizedBox.shrink()
                         : value == "speed"
                             ? Align(
-                                alignment: AlignmentDirectional.topEnd,
+                                alignment: AlignmentDirectional.centerEnd,
                                 child: PlaybackSpeedSlider(
                                   videoController: widget.videoController,
                                   disposeSlider: () => toggleSpeedAndVolumeSliders.value = "",

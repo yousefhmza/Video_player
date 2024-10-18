@@ -1,4 +1,4 @@
-import 'package:better_player/better_player.dart';
+import 'package:better_player_plus/better_player_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:video_player/core/utils/debouncer.dart';
 import 'package:video_player/core/view/views.dart';
